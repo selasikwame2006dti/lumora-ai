@@ -23,7 +23,7 @@
   <pre id="result"></pre>
 
   <script>
-    const apiKey = '73ad2f9263cf9e651a68ef82efbdd44e'; // Set your approved frontend token here
+    const apiKey = '8b0e3babeda2c4e9c76e77ceb613c524'; // Replace with your frontend API key
     const apiUrl = 'https://lumoapi.xo.je/api.php';
 
     document.getElementById('generateBtn').addEventListener('click', async () => {
@@ -32,7 +32,6 @@
         alert('Please enter a prompt');
         return;
       }
-
       const resultEl = document.getElementById('result');
       resultEl.textContent = 'Generating...';
 
@@ -42,7 +41,6 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt }),
         });
-
         const data = await response.json();
 
         if (response.ok && data.response) {
