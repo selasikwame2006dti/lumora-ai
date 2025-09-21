@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lumora AI - Text Generation</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 10px; }
-    label, input, button, textarea { display: block; width: 100%; margin-bottom: 10px; }
-    button { padding: 10px; }
-    textarea { height: 150px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lumora AI - Text Generation</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 10px; }
+  label, input, button, textarea { display: block; width: 100%; margin-bottom: 10px; }
+  button { padding: 10px; }
+  textarea { height: 150px; }
+</style>
 </head>
 <body>
   <h1>Lumora AI Text Generator</h1>
+
   <label for="prompt">Enter your prompt:</label>
   <textarea id="prompt" placeholder="Type your prompt here..."></textarea>
+
   <button id="generateBtn">Generate Text</button>
+
   <h2>Result:</h2>
   <pre id="result"></pre>
 
   <script>
-    const apiKey = '73ad2f9263cf9e651a68ef82efbdd44e'; // Your frontend token from admin UI
-const apiUrl = 'https://lumoapi.xo.je/api.php'; // Your backend API URL
+    const apiKey = 'your_frontend_key_here'; // Put your approved frontend API key here
+    const apiUrl = 'https://lumoapi.xo.je/api.php';
 
     document.getElementById('generateBtn').addEventListener('click', async () => {
       const prompt = document.getElementById('prompt').value.trim();
@@ -32,19 +35,21 @@ const apiUrl = 'https://lumoapi.xo.je/api.php'; // Your backend API URL
       document.getElementById('result').textContent = 'Generating...';
 
       try {
-        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+        const response = await fetch(apiUrl + '?key=' + apiKey, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt })
+          body: JSON.stringify({ prompt }),
         });
+
         const data = await response.json();
+
         if (response.ok && data.response) {
           document.getElementById('result').textContent = data.response;
         } else {
           document.getElementById('result').textContent = 'Error: ' + (data.error || 'Unknown error');
         }
-      } catch (err) {
-        document.getElementById('result').textContent = 'Fetch failed: ' + err.message;
+      } catch (error) {
+        document.getElementById('result').textContent = 'Fetch failed: ' + error.message;
       }
     });
   </script>
