@@ -6,9 +6,9 @@
 <title>Lumora AI - Text Generation</title>
 <style>
   body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 10px; }
-  label, input, button, textarea { display: block; width: 100%; margin-bottom: 10px; }
-  button { padding: 10px; }
+  label, textarea, button, pre { display: block; width: 100%; margin-bottom: 10px; }
   textarea { height: 150px; }
+  button { padding: 10px; }
 </style>
 </head>
 <body>
@@ -23,7 +23,7 @@
   <pre id="result"></pre>
 
   <script>
-    const apiKey = 'your_frontend_key_here'; // Put your approved frontend API key here
+    const apiKey = '8b0e3babeda2c4e9c76e77ceb613c524'; // Replace with approved frontend API key
     const apiUrl = 'https://lumoapi.xo.je/api.php';
 
     document.getElementById('generateBtn').addEventListener('click', async () => {
@@ -32,24 +32,28 @@
         alert('Please enter a prompt');
         return;
       }
-      document.getElementById('result').textContent = 'Generating...';
+      const resultEl = document.getElementById('result');
+      resultEl.textContent = 'Generating...';
 
       try {
-        const response = await fetch(apiUrl + '?key=' + apiKey, {
+        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({ prompt }),
         });
 
         const data = await response.json();
 
         if (response.ok && data.response) {
-          document.getElementById('result').textContent = data.response;
+          resultEl.textContent = data.response;
         } else {
-          document.getElementById('result').textContent = 'Error: ' + (data.error || 'Unknown error');
+          resultEl.textContent = 'Error: ' + (data.error || 'Unknown error');
         }
-      } catch (error) {
-        document.getElementById('result').textContent = 'Fetch failed: ' + error.message;
+
+      } catch (err) {
+        resultEl.textContent = 'Fetch failed: ' + err.message;
       }
     });
   </script>
