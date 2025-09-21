@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lumora AI - Text Generation</title>
+<title>Lumora AI Text Generator</title>
 <style>
   body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 10px; }
   label, textarea, button, pre { display: block; width: 100%; margin-bottom: 10px; }
@@ -23,7 +23,7 @@
   <pre id="result"></pre>
 
   <script>
-    const apiKey = '8b0e3babeda2c4e9c76e77ceb613c524'; // Replace with approved frontend API key
+    const apiKey = 'your_frontend_api_key_here'; // Set your approved frontend token here
     const apiUrl = 'https://lumoapi.xo.je/api.php';
 
     document.getElementById('generateBtn').addEventListener('click', async () => {
@@ -32,15 +32,14 @@
         alert('Please enter a prompt');
         return;
       }
+
       const resultEl = document.getElementById('result');
       resultEl.textContent = 'Generating...';
 
       try {
-        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+        const response = await fetch(apiUrl + '?key=' + apiKey, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt }),
         });
 
@@ -51,7 +50,6 @@
         } else {
           resultEl.textContent = 'Error: ' + (data.error || 'Unknown error');
         }
-
       } catch (err) {
         resultEl.textContent = 'Fetch failed: ' + err.message;
       }
